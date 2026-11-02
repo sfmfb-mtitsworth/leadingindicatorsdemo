@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-01T16:49:56+00:00",
+ "generated_at": "2026-11-02T20:22:43+00:00",
  "groups": [
   "Fuel prices",
   "Food staple prices",
@@ -25,7 +25,7 @@
    "eia_series": "EMM_EPMR_PTE_Y05SF_DPG",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:47+00:00",
+   "fetched_at": "2026-11-02T20:22:40+00:00",
    "key": "EIA_API_KEY",
    "points": [
     [
@@ -1322,7 +1322,7 @@
    "eia_series": "EMD_EPD2D_PTE_SCA_DPG",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:47+00:00",
+   "fetched_at": "2026-11-02T20:22:40+00:00",
    "key": "EIA_API_KEY",
    "points": [
     [
@@ -2629,7 +2629,7 @@
    "scale": 0.01,
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:36+00:00",
+   "fetched_at": "2026-11-02T20:22:36+00:00",
    "key": "USDA_AMS_API_KEY",
    "points": [
     [
@@ -3222,7 +3222,7 @@
    "scale": 0.01,
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:36+00:00",
+   "fetched_at": "2026-11-02T20:22:36+00:00",
    "key": "USDA_AMS_API_KEY",
    "points": [
     [
@@ -4209,7 +4209,7 @@
    "scale": 1,
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:36+00:00",
+   "fetched_at": "2026-11-02T20:22:36+00:00",
    "key": "USDA_AMS_API_KEY",
    "points": [
     [
@@ -4226,7 +4226,7 @@
     ],
     [
      "2023-10-30",
-     282.8725,
+     282.0813,
      null,
      0
     ],
@@ -4293,67 +4293,67 @@
     [
      "2024-01-15",
      278.9418,
-     -0.0,
+     0.01,
      0
     ],
     [
      "2024-01-22",
      281.1403,
-     0.4,
+     0.41,
      0
     ],
     [
      "2024-01-29",
      277.291,
-     -0.35,
+     -0.34,
      0
     ],
     [
      "2024-02-05",
      275.4787,
-     -0.69,
+     -0.68,
      0
     ],
     [
      "2024-02-12",
      274.947,
-     -0.77,
+     -0.76,
      0
     ],
     [
      "2024-02-19",
      278.7665,
-     0.04,
+     0.05,
      0
     ],
     [
      "2024-02-26",
      282.7173,
-     0.86,
+     0.87,
      0
     ],
     [
      "2024-03-04",
      286.19,
-     1.55,
+     1.57,
      1
     ],
     [
      "2024-03-11",
      291.0532,
-     2.42,
+     2.44,
      2
     ],
     [
      "2024-03-18",
      294.3512,
-     2.7,
+     2.71,
      2
     ],
     [
      "2024-03-25",
      291.841,
-     1.88,
+     1.89,
      1
     ],
     [
@@ -4365,7 +4365,7 @@
     [
      "2024-04-08",
      284.636,
-     0.57,
+     0.58,
      0
     ],
     [
@@ -4383,7 +4383,7 @@
     [
      "2024-04-29",
      278.0278,
-     -0.52,
+     -0.51,
      0
     ],
     [
@@ -4395,19 +4395,19 @@
     [
      "2024-05-13",
      289.9298,
-     1.52,
+     1.53,
      1
     ],
     [
      "2024-05-20",
      293.5145,
-     2.04,
+     2.05,
      2
     ],
     [
      "2024-05-27",
      295.3078,
-     2.17,
+     2.18,
      2
     ],
     [
@@ -4419,7 +4419,7 @@
     [
      "2024-06-10",
      299.5605,
-     2.42,
+     2.43,
      2
     ],
     [
@@ -4437,7 +4437,7 @@
     [
      "2024-07-01",
      312.3247,
-     3.19,
+     3.2,
      3
     ],
     [
@@ -5193,7 +5193,7 @@
    "source_url": "https://www.bls.gov/regions/west/consumerpriceindex_sanfrancisco.htm",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:36+00:00",
+   "fetched_at": "2026-11-02T20:22:37+00:00",
    "key": null,
    "points": [
     [
@@ -5488,7 +5488,7 @@
    "source_url": "https://edd.ca.gov/en/newsroom/facts-and-stats/dashboard/",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:38+00:00",
+   "fetched_at": "2026-11-02T20:22:39+00:00",
    "key": null,
    "points": [
     [
@@ -7648,7 +7648,7 @@
    "source_url": "https://edd.ca.gov/en/jobs_and_training/Layoff_Services_WARN",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:38+00:00",
+   "fetched_at": "2026-11-02T20:22:39+00:00",
    "key": null,
    "points": [
     [
@@ -8376,13 +8376,19 @@
      475.0,
      -0.07,
      0
+    ],
+    [
+     "2026-10-26",
+     345.0,
+     -0.26,
+     0
     ]
    ],
    "stats": {
-    "latest": 475.0,
-    "latest_date": "2026-10-19",
-    "recent_avg": 604.75,
-    "year_avg": 509.40384615384613,
+    "latest": 345.0,
+    "latest_date": "2026-10-26",
+    "recent_avg": 334.0,
+    "year_avg": 492.2307692307692,
     "recent_n": 4,
     "year_n": 52
    }
@@ -8405,7 +8411,7 @@
    "fred_id": "WEI",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:47+00:00",
+   "fetched_at": "2026-11-02T20:22:41+00:00",
    "key": null,
    "points": [
     [
@@ -9695,7 +9701,7 @@
    "source_url": "https://www.bls.gov/lau/",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:36+00:00",
+   "fetched_at": "2026-11-02T20:22:37+00:00",
    "key": null,
    "points": [
     [
@@ -10062,7 +10068,7 @@
    "source_url": "https://www.bls.gov/regions/west/consumerpriceindex_sanfrancisco.htm",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:36+00:00",
+   "fetched_at": "2026-11-02T20:22:37+00:00",
    "key": null,
    "points": [
     [
@@ -10219,7 +10225,7 @@
    "source_url": "https://data.sfgov.org/Housing-and-Buildings/Eviction-Notices/5cei-gny5",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:55+00:00",
+   "fetched_at": "2026-11-02T20:22:42+00:00",
    "key": null,
    "points": [
     [
@@ -11157,13 +11163,19 @@
      5.0,
      -2.08,
      0
+    ],
+    [
+     "2026-10-12",
+     2.0,
+     -2.2,
+     0
     ]
    ],
    "stats": {
-    "latest": 5.0,
-    "latest_date": "2026-10-05",
-    "recent_avg": 14.5,
-    "year_avg": 28.76923076923077,
+    "latest": 2.0,
+    "latest_date": "2026-10-12",
+    "recent_avg": 8.5,
+    "year_avg": 28.53846153846154,
     "recent_n": 4,
     "year_n": 52
    }
@@ -11185,7 +11197,7 @@
    "source_url": "https://www.zillow.com/research/data/",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-01T16:49:56+00:00",
+   "fetched_at": "2026-11-02T20:22:43+00:00",
    "key": null,
    "points": [
     [
@@ -12047,11 +12059,6 @@
  ],
  "composite": [
   [
-   "2023-10-30",
-   0.13,
-   0
-  ],
-  [
    "2023-11-06",
    -0.1,
    0
@@ -12223,7 +12230,7 @@
   ],
   [
    "2024-07-01",
-   0.01,
+   0.02,
    0
   ],
   [
@@ -12818,13 +12825,18 @@
   ],
   [
    "2026-10-12",
-   0.03,
+   -0.16,
    0
   ],
   [
    "2026-10-19",
    0.17,
    0
+  ],
+  [
+   "2026-10-26",
+   0.5,
+   1
   ]
  ]
 }
