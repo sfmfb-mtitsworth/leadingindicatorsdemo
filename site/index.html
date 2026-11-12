@@ -102,6 +102,36 @@ h3 { font-size: 14px; font-weight: 600; line-height: 1.3; margin: 0 }
 .tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 11px/1.5 var(--font); padding: 7px 11px; white-space: nowrap; transform: translate(-50%, calc(-100% - 8px)); z-index: 2 }
 footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 11px; letter-spacing: .04em; color: var(--ink-3) }
 .empty { color: var(--ink-3); font-size: 13px; padding: 24px 0 }
+/* Expand button on each card, and the larger single-indicator view it opens. */
+.tile-head { display: flex; align-items: flex-start; gap: 8px }
+.tile-head h3 { flex: 1; min-width: 0 }
+.icon-btn { flex: none; width: 28px; height: 28px; display: grid; place-items: center; padding: 0; margin: -4px -4px 0 0;
+  border: 1px solid var(--rule); background: var(--surface); color: var(--ink-3); cursor: pointer; transition: color .1s, border-color .1s }
+.icon-btn:hover { color: var(--brand); border-color: var(--brand) }
+.icon-btn:focus-visible, .pill:focus-visible { outline: 2px solid var(--brand); outline-offset: 1px }
+.icon-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round }
+body:has(dialog[open]) { overflow: hidden }
+dialog.detail { width: min(960px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); padding: 0; border: 1px solid var(--rule);
+  background: var(--surface); color: var(--ink); box-shadow: 0 24px 64px rgba(17, 24, 39, .28) }
+dialog.detail::backdrop { background: rgba(17, 24, 39, .5) }
+.detail-inner { padding: 24px; display: grid; gap: 14px }
+.detail-head { display: flex; gap: 12px; align-items: flex-start }
+.detail-head > div { flex: 1; min-width: 0; display: grid; gap: 8px }
+.detail-head h3 { font-size: clamp(20px, 3vw, 26px); font-weight: 800; letter-spacing: -.02em; line-height: 1.15 }
+.detail-head .icon-btn { margin: 0; width: 32px; height: 32px }
+.detail .chips { display: flex; flex-wrap: wrap; gap: 6px }
+.detail .desc { max-width: 75ch }
+.detail .stats { grid-template-columns: repeat(4, minmax(0, 1fr)) }
+@media (max-width: 559px) { .detail .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 10px } .detail-inner { padding: 16px } }
+.detail .chart { height: clamp(240px, 46vh, 440px); contain: size }
+.detail-bar { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between }
+.pill-group { display: inline-flex; border: 1px solid var(--rule) }
+.pill { padding: 5px 10px; font: 500 11px var(--font); letter-spacing: .02em; color: var(--ink-3); background: var(--surface); border: 0; cursor: pointer }
+.pill + .pill { border-left: 1px solid var(--rule) }
+.pill:hover { color: var(--ink) }
+.pill[aria-pressed="true"] { background: var(--ink); color: var(--bg) }
+.detail .foot { text-align: left }
+.detail .err { font-size: 12px; color: var(--warn-ink) }
 </style>
 </head>
 <body>
@@ -149,6 +179,7 @@ footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 11px; 
   <div id="groups"></div>
 
   <footer>Built from public data sources, named on each card. Refreshed daily.</footer>
+  <dialog class="detail" id="detail" aria-labelledby="detail-title"></dialog>
 </div>
 
 <script>
@@ -306,7 +337,8 @@ function render() {
       const st = s.stats, p = s.points[s.points.length - 1];
       const recentLabel = s.freq === "weekly" ? "4-wk avg" : "3-mo avg";
       const tile = h(`<article class="card tile" id="${esc(s.id)}">
-        <h3 title="${esc(fullTitle(s))}">${esc(fullTitle(s))}</h3>
+        <div class="tile-head"><h3 title="${esc(fullTitle(s))}">${esc(fullTitle(s))}</h3>
+          <button type="button" class="icon-btn expand" aria-label="Expand ${esc(s.title)}" title="Expand">${ICON_EXPAND}</button></div>
         <div class="chips">${p ? levelChip(p[3]) : ""}${statusChip(s)}</div>
         <p class="desc" title="${esc(s.description)}">${esc(s.description)}</p>
         <div class="stats">
@@ -318,6 +350,7 @@ function render() {
         <div class="foot">${st ? esc(dateLabel(st.latest_date, s.freq)) + " · " : ""}${esc(s.geo)}${s.freq === "monthly" ? " · Monthly" : ""}<br>
           <b>Source:</b> <a href="${esc(s.source_url)}" target="_blank" rel="noopener" style="color:inherit">${esc(s.source)}</a> · <b>Ingested:</b> ${s.status === "sample" ? "sample data" : esc(ingest(s.fetched_at))}</div>
       </article>`);
+      tile.querySelector(".expand").addEventListener("click", () => openDetail(s));
       grid.appendChild(tile);
     });
     groups.appendChild(sec);
@@ -340,6 +373,69 @@ function render() {
   }).observe(document.querySelector(".wrap"));
   draw();
 }
+
+/* Larger view of one indicator in a modal dialog: full description, more stats, a taller chart and a range toggle. */
+const ICON_EXPAND = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 2.5h4v4M13.5 2.5 9 7M6.5 13.5h-4v-4M2.5 13.5 7 9"/></svg>';
+const ICON_CLOSE = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/></svg>';
+const detail = document.getElementById("detail");
+let detailSeries = null, detailRange = "since";
+
+function openDetail(s) {
+  detailSeries = s; detailRange = "since";
+  const st = s.stats, p = s.points[s.points.length - 1];
+  const recentLabel = s.freq === "weekly" ? "4-wk avg" : "3-mo avg";
+  const z = p && p[2] != null ? `${p[2] > 0 ? "+" : ""}${p[2].toFixed(1)} SD` : "–";
+  const since = "Since Jan 2025"; // matches ANCHOR, the start of every chart on the page
+  detail.innerHTML = `<div class="detail-inner">
+    <div class="detail-head"><div>
+        <h3 id="detail-title">${esc(fullTitle(s))}</h3>
+        <div class="chips">${p ? levelChip(p[3]) : ""}${statusChip(s)}<span class="chip lag">${esc(s.group)}</span></div>
+      </div>
+      <button type="button" class="icon-btn" id="detail-close" aria-label="Close">${ICON_CLOSE}</button></div>
+    <p class="desc">${esc(s.description)}</p>
+    <div class="stats">
+      <div><span class="k">Latest</span><span class="v">${st ? esc(fmt(st.latest, s)) : "–"}</span></div>
+      <div><span class="k">${recentLabel}</span><span class="v">${st ? esc(fmt(st.recent_avg, s)) : "–"}</span></div>
+      <div><span class="k">12-mo avg</span><span class="v">${st ? esc(fmt(st.year_avg, s)) : "–"}</span></div>
+      <div><span class="k">vs. normal</span><span class="v">${z}</span></div>
+    </div>
+    <div class="detail-bar">
+      <div class="pill-group" role="group" aria-label="Time range">
+        <button type="button" class="pill" data-range="since" aria-pressed="true">${since}</button>
+        <button type="button" class="pill" data-range="all" aria-pressed="false">All history</button>
+      </div>
+      <div class="note" id="detail-note"></div>
+    </div>
+    <div class="chart" id="detail-chart"></div>
+    <div class="foot">${st ? esc(dateLabel(st.latest_date, s.freq)) + " · " : ""}${esc(s.geo)}${s.freq === "monthly" ? " · Monthly" : " · Weekly"}<br>
+      <b>Source:</b> <a href="${esc(s.source_url)}" target="_blank" rel="noopener" style="color:inherit">${esc(s.source)}</a> · <b>Ingested:</b> ${s.status === "sample" ? "sample data" : esc(ingest(s.fetched_at))}</div>
+    ${s.error && s.status !== "live" ? `<div class="err">Last update error: ${esc(s.error)}</div>` : ""}
+  </div>`;
+  detail.querySelector("#detail-close").addEventListener("click", () => detail.close());
+  detail.querySelectorAll(".pill").forEach(b => b.addEventListener("click", () => {
+    detailRange = b.dataset.range;
+    detail.querySelectorAll(".pill").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    drawDetail();
+  }));
+  detail.showModal();
+  drawDetail();
+}
+
+function drawDetail() {
+  const s = detailSeries;
+  if (!s || !detail.open) return;
+  const base = domain();
+  const dom = detailRange === "all" && s.points.length ? { start: d8(s.points[0][0]), end: base.end } : base;
+  const pts = windowed(s.points, s.freq, dom);
+  chart(document.getElementById("detail-chart"), pts, s, "bar", dom, windowed(movingAvg(s.points, s.freq), s.freq, dom));
+  document.getElementById("detail-note").textContent = `${pts.length} ${s.freq === "monthly" ? "months" : "weeks"} shown`;
+}
+
+detail.addEventListener("click", e => { if (e.target === detail) detail.close(); }); // click on the backdrop
+detail.addEventListener("close", () => { detailSeries = null; });
+let detailPending = 0;
+window.addEventListener("resize", () => { cancelAnimationFrame(detailPending); detailPending = requestAnimationFrame(drawDetail); });
+
 render();
 </script>
 </body>
