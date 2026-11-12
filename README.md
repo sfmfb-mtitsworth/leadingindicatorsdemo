@@ -16,7 +16,7 @@ prices, jobs and housing. GitHub Actions pulls each source, scores anomalies, re
 | Food staple prices | Beef prices | U.S. | USDA AMS report 2453 | `USDA_AMS_API_KEY` |
 | Jobs & economy | Unemployment claims | SF + Marin | EDD weekly claims by county (dashboard xlsx) | none |
 | Jobs & economy | WARN layoff notices | Bay Area | EDD WARN xlsx + backfill from FY24-25 and FY25-26 PDFs (`data/backfill/`) | none |
-| Jobs & economy | Weekly Economic Index | U.S. | NY Fed via FRED `WEI` | none |
+| Jobs & economy | Weekly Economic Index | U.S. | NY Fed via FRED `WEI` (FRED API; public CSV if no key) | recommended `FRED_API_KEY` |
 | Housing stress | Eviction notices | San Francisco | DataSF `5cei-gny5` | optional `SOCRATA_APP_TOKEN` |
 | Housing stress | Rents | SF metro | Zillow ZORI (monthly) | none |
 | Jobs & economy | Inflation (CPI), all items | SF-Oakland-Hayward | BLS `CUURS49BSA0` (every other month) | optional `BLS_API_KEY` |
