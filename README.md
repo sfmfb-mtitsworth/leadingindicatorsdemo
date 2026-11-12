@@ -8,6 +8,7 @@ prices, jobs and housing. GitHub Actions pulls each source, scores anomalies, re
 
 | Group | Indicator | Geography | Source | Secret |
 |---|---|---|---|---|
+| Demand signals | Searches for "food bank" | SF-Oakland-San Jose DMA | Google Trends API (alpha), same query as `hungersearchindex`; history backfilled from that repo | `GOOGLE_TRENDS_SA_KEY` |
 | Fuel prices | Gas prices | San Francisco | EIA weekly retail | `EIA_API_KEY` |
 | Fuel prices | Diesel prices | California | EIA weekly retail | `EIA_API_KEY` |
 | Food staple prices | Egg prices | California | USDA AMS report 2844 | `USDA_AMS_API_KEY` |
@@ -25,8 +26,10 @@ prices, jobs and housing. GitHub Actions pulls each source, scores anomalies, re
 A source whose secret is missing shows **sample data**, labelled on the dashboard. Add the
 secret under Settings > Secrets and variables > Actions and the next run switches it to live.
 
-**Planned for v1.1:** Google searches for "food bank" (Google Trends API alpha). The module is parked in
-`etl/archive/google_trends.py`; move it back to `etl/sources/` and add `GOOGLE_TRENDS_API_KEY` to enable it.
+**Google Trends:** a Google Cloud service account in the project that has Trends alpha access. Put the whole JSON
+key file in the `GOOGLE_TRENDS_SA_KEY` secret. No user sign-in, so it does not expire; rotate the key by creating a new
+one in Google Cloud, updating the secret, then deleting the old key. Without the secret the card keeps its stored
+history and is flagged as not updating. It is shown on its own and not counted in the General Indicator (`weight: 0`).
 
 ## Schedule
 

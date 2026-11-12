@@ -35,9 +35,10 @@ import common  # noqa: E402
 import sources  # noqa: E402
 
 HISTORY = ROOT / "data" / "series"
-SECRET_ENV = ["EIA_API_KEY", "USDA_AMS_API_KEY", "BLS_API_KEY", "SOCRATA_APP_TOKEN", "GOOGLE_TRENDS_API_KEY"]
+SECRET_ENV = ["EIA_API_KEY", "USDA_AMS_API_KEY", "BLS_API_KEY", "SOCRATA_APP_TOKEN",
+              "GOOGLE_TRENDS_SA_KEY"]
 BASELINE = {"weekly": (52, 12), "monthly": (24, 8)}  # (trailing periods, minimum periods)
-GROUPS = ["Fuel prices", "Food staple prices", "Jobs & economy", "Housing stress"]
+GROUPS = ["Demand signals", "Fuel prices", "Food staple prices", "Jobs & economy", "Housing stress"]
 PLACEHOLDER = "/*__DASHBOARD_DATA__*/null"
 
 

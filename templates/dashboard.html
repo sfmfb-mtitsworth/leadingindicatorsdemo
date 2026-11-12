@@ -5,113 +5,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Weekly leading indicators of household economic pressure in the San Francisco Bay Area: prices, jobs and housing.">
 <title>SF Bay Area Leading Indicators</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Source+Sans+3:wght@400;600&display=swap">
 <style>
-/* Layout: report column like the Power BI page; summary first, then square indicator cards, three per row, grouped. */
+/* Look matches the California Hunger Signal page: white ground, flat 1px rules, system type, orange accent. */
 :root {
-  --bg: #f5f7f4; --surface: #ffffff; --ink: #1d2a1f; --ink-2: #4f5d52; --ink-3: #7d887f;
-  --rule: #dde3dc; --grid: #edf0ec; --brand: #2f7a34; --brand-soft: #e6f1e4;
-  --bar: #c9cfc8; --line: #5b6b5e; --trend: #1d2a1f;
-  --sev1: #f2a9a9; --sev2: #e06464; --sev3: #b32f2f; --calm: #c9cfc8;
-  --warn-bg: #fff6e0; --warn-ink: #7a5600;
-  --display: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --bg: #ffffff; --surface: #ffffff; --surface-2: #f5f6f8; --ink: #111827; --ink-2: #374151; --ink-3: #6b7280;
+  --rule: #e2e5ea; --grid: #eef0f3; --brand: #e8622a; --ocean: #1a6b9a; --ocean-soft: #e3eff6;
+  --trend: #111827; --calm: #d4d8de;
+  --sev1: #f6c3a9; --sev2: #e8622a; --sev3: #9e3a10;
+  --warn-bg: #fdf1ea; --warn-ink: #9e3a10;
+  --font: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #121713; --surface: #1a211b; --ink: #e9eee8; --ink-2: #b2bdb3; --ink-3: #849086;
-  --rule: #2c362d; --grid: #222b23; --brand: #74c27a; --brand-soft: #1f3321;
-  --bar: #4a524c; --line: #a9b6aa; --trend: #eef1f3; --sev1: #96534e; --sev2: #dd574e; --sev3: #ff7f66; --calm: #4a524c;
-  --warn-bg: #2f2710; --warn-ink: #f0c869; color-scheme: dark } }
+  --bg: #0e1013; --surface: #14171c; --surface-2: #1b1f26; --ink: #f3f4f6; --ink-2: #d1d5db; --ink-3: #9ca3af;
+  --rule: #2a2f38; --grid: #20242b; --brand: #f07a45; --ocean: #5aaad6; --ocean-soft: #16303f;
+  --trend: #f3f4f6; --calm: #3a404a; --sev1: #8a4a2c; --sev2: #f07a45; --sev3: #ffb08a;
+  --warn-bg: #2b1a10; --warn-ink: #ffb08a; color-scheme: dark } }
 :root[data-theme="dark"] {
-  --bg: #121713; --surface: #1a211b; --ink: #e9eee8; --ink-2: #b2bdb3; --ink-3: #849086;
-  --rule: #2c362d; --grid: #222b23; --brand: #74c27a; --brand-soft: #1f3321;
-  --bar: #4a524c; --line: #a9b6aa; --trend: #eef1f3; --sev1: #96534e; --sev2: #dd574e; --sev3: #ff7f66; --calm: #4a524c;
-  --warn-bg: #2f2710; --warn-ink: #f0c869; color-scheme: dark }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body) }
-.wrap { max-width: 1100px; margin: 0 auto; padding-block: 24px 48px;
+  --bg: #0e1013; --surface: #14171c; --surface-2: #1b1f26; --ink: #f3f4f6; --ink-2: #d1d5db; --ink-3: #9ca3af;
+  --rule: #2a2f38; --grid: #20242b; --brand: #f07a45; --ocean: #5aaad6; --ocean-soft: #16303f;
+  --trend: #f3f4f6; --calm: #3a404a; --sev1: #8a4a2c; --sev2: #f07a45; --sev3: #ffb08a;
+  --warn-bg: #2b1a10; --warn-ink: #ffb08a; color-scheme: dark }
+*, *::before, *::after { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.5 var(--font); -webkit-font-smoothing: antialiased }
+.wrap { max-width: 1100px; margin: 0 auto; padding-block: 48px 72px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
-  display: grid; gap: 20px }
-header.top { border-bottom: 3px solid var(--brand); padding-bottom: 12px; display: grid; gap: 2px; text-align: center }
-h1 { font: 700 clamp(24px, 3.4vw, 30px)/1.2 var(--display); color: var(--brand); margin: 0; text-wrap: balance }
-.sub { font-size: 13px; color: var(--ink-3) }
-h2 { font: 700 20px/1.25 var(--display); margin: 0; text-wrap: balance }
-h3 { font: 700 17px/1.25 var(--display); margin: 0; text-wrap: balance }
+  display: grid; gap: 24px }
+header.top { border-bottom: 1px solid var(--rule); padding-bottom: 28px; display: grid; gap: 14px }
+.eyebrow { margin: 0; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3) }
+h1 { font-size: clamp(32px, 4.5vw, 52px); font-weight: 800; letter-spacing: -.03em; line-height: 1; margin: 0; color: var(--ink); text-wrap: balance }
+h1 span { color: var(--brand) }
+.sub { font-size: 14px; color: var(--ink-3) }
+h2 { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin: 0 }
+h3 { font-size: 14px; font-weight: 600; line-height: 1.3; margin: 0 }
 .num { font-variant-numeric: tabular-nums }
-.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 16px; min-width: 0 }
-.intro { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; align-items: start }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 0; padding: 20px; min-width: 0 }
+.intro { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; align-items: start }
 @media (max-width: 760px) { .intro { grid-template-columns: 1fr } }
 .intro p { margin: 0; color: var(--ink-2); max-width: 65ch }
 .controls { display: grid; gap: 10px; justify-items: start }
-.label { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3) }
+.label { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3) }
 .range { font-weight: 600 }
-.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 5px; overflow: hidden }
-.seg button { font: 600 13px var(--body); padding: 6px 12px; border: 0; background: var(--surface); color: var(--ink-2); cursor: pointer }
-.seg button + button { border-left: 1px solid var(--rule) }
-.seg button[aria-pressed="true"] { background: var(--brand); color: var(--surface) }
-.seg button:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--ink-2) }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: var(--ink-2) }
 .legend span { display: inline-flex; align-items: center; gap: 6px }
-.sw { width: 12px; height: 12px; border-radius: 2px; display: inline-block }
-.banner { background: var(--warn-bg); color: var(--warn-ink); border-radius: 6px; padding: 10px 14px; font-size: 14px }
-.watch { display: grid; gap: 10px }
-.watch ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px }
-.watch li { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline }
-.watch li a { color: var(--ink); font-weight: 600 }
-.chip { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 10px; white-space: nowrap }
-.chip.l1 { background: var(--sev1); color: var(--ink) } .chip.l2 { background: var(--sev2); color: #fff } .chip.l3 { background: var(--sev3); color: #2a0b06 }
-.chip.sample { background: var(--warn-bg); color: var(--warn-ink); border: 1px solid currentColor }
-.chip.stale, .chip.error { background: var(--warn-bg); color: var(--sev3); border: 1px solid currentColor }
-.chip.ok { background: var(--brand-soft); color: var(--brand) }
-.group { display: grid; gap: 12px }
-.group > h2 { padding-top: 8px; border-top: 1px solid var(--rule) }
-.panel { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 16px }
+.sw { width: 10px; height: 10px; display: inline-block }
+.banner { background: var(--warn-bg); color: var(--warn-ink); border-left: 3px solid var(--brand); padding: 10px 14px; font-size: 13px }
+.watch { display: grid; gap: 12px }
+.watch ul { list-style: none; margin: 0; padding: 0; display: grid }
+.watch li { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--rule) }
+.watch li:last-child { border-bottom: 0 }
+.watch li a { color: var(--ink); font-weight: 600; text-decoration: none }
+.watch li a:hover { color: var(--brand) }
+.chip { font-size: 11px; font-weight: 600; letter-spacing: .02em; padding: 2px 7px; border-radius: 2px; white-space: nowrap }
+.chip.l1 { background: var(--sev1); color: var(--ink) } .chip.l2 { background: var(--sev2); color: #fff } .chip.l3 { background: var(--sev3); color: #fff }
+.chip.sample, .chip.stale, .chip.error { background: var(--warn-bg); color: var(--warn-ink); border: 1px solid currentColor }
+.chip.ok { background: var(--ocean-soft); color: var(--ocean) }
+.chip.lag { background: var(--surface); color: var(--ink-2); border: 1px solid var(--rule) }
+.group { display: grid; gap: 14px }
+.group > h2 { padding-top: 20px; border-top: 1px solid var(--rule) }
+.group-note { margin: -4px 0 0; font-size: 13px; color: var(--ink-2); max-width: 75ch }
+.panel { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 24px }
 @media (max-width: 760px) { .panel { grid-template-columns: 1fr } }
 .panel .meta { display: grid; gap: 8px; align-content: start }
-.desc { font-size: 14px; color: var(--ink-2); margin: 0 }
+.desc { font-size: 13px; color: var(--ink-2); margin: 0 }
 #general-chart { height: 180px; contain: size }
 /* Columns switch where a card would drop below ~350px wide, the smallest square its content fits in. */
 .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px }
 @media (max-width: 1119px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
 @media (max-width: 759px) { .tiles { grid-template-columns: minmax(0, 1fr) } }
 /* Every card is the same square: text is clamped and the chart takes whatever height is left. */
-.tile { aspect-ratio: 1 / 1; min-height: 0; overflow: hidden; max-width: 100%; display: flex; flex-direction: column; gap: 8px }
+.tile { aspect-ratio: 1 / 1; min-height: 0; overflow: hidden; max-width: 100%; display: flex; flex-direction: column; gap: 8px; transition: background .1s }
+.tile:hover { background: var(--surface-2) }
 .tile > * { flex-shrink: 0 }
 .tile h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
-.tile .desc { font-size: 13px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
-.sd-note { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 12px; font-size: 14px; color: var(--ink-2) }
-.sd-note p { margin: 4px 0 0; max-width: 90ch }
-.trend-sw { height: 2px !important; width: 16px !important; background: var(--trend) }
-.chip.lag { background: var(--surface); color: var(--ink-2); border: 1px solid var(--rule) }
-.group-note { margin: -4px 0 0; font-size: 14px; color: var(--ink-2); max-width: 75ch }
-.tile .chips { display: flex; flex-wrap: wrap; gap: 6px; min-height: 22px; margin-top: -4px }
-.tile .stats .v { font-size: 18px }
+.tile .desc { font-size: 12px; line-height: 1.45; color: var(--ink-3); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
+.tile .chips { display: flex; flex-wrap: wrap; gap: 6px; min-height: 22px; margin-top: -2px }
 .tile .chart { flex: 1 1 0; min-height: 0; contain: size }
 /* One column: a square would be too short on phones and too tall on tablets, so every card gets the same fixed height. */
 @media (max-width: 759px) { .tile { aspect-ratio: auto; height: 440px } .tile h3 { white-space: normal } }
 .tile .foot { text-align: left; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden }
+.sd-note { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 14px; font-size: 13px; color: var(--ink-2) }
+.sd-note p { margin: 4px 0 0; max-width: 90ch }
+.trend-sw { height: 2px !important; width: 16px !important; background: var(--trend) }
 .titlerow { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: baseline }
-.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 2px solid var(--brand); padding-top: 6px; text-align: center }
-.stats div { display: grid; gap: 2px }
-.stats .k { font-size: 12px; color: var(--ink-3) }
-.stats .v { font: 600 20px/1.2 var(--body); font-variant-numeric: tabular-nums }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 8px 0 }
+.stats div { display: grid; gap: 4px }
+.stats .k { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3) }
+.stats .v { font-size: 20px; font-weight: 700; line-height: 1.1; letter-spacing: -.02em; font-variant-numeric: tabular-nums }
+.stats div:first-child .v { color: var(--brand) }
 .chartcol { display: grid; gap: 4px; min-width: 0 }
 .chart { position: relative }
 .chart svg { display: block; width: 100%; height: auto; overflow: visible }
-.chart text { fill: var(--ink-3); font: 11px var(--body); font-variant-numeric: tabular-nums }
-.note { font-size: 12px; color: var(--ink-3) }
-.foot { font-size: 12px; color: var(--ink-3); text-align: right }
+.chart text { fill: var(--ink-3); font: 10px var(--font); letter-spacing: .02em; font-variant-numeric: tabular-nums }
+.note { font-size: 11px; color: var(--ink-3) }
+.foot { font-size: 11px; color: var(--ink-3); text-align: right; font-variant-numeric: tabular-nums }
 .foot b { color: var(--ink-2); font-weight: 600 }
-.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 12px/1.45 var(--body); padding: 6px 8px; border-radius: 4px; white-space: nowrap; transform: translate(-50%, calc(-100% - 8px)); z-index: 2 }
-footer { text-align: center; font-size: 13px; color: var(--ink-3); font-style: italic }
-.empty { color: var(--ink-3); font-size: 14px; padding: 24px 0 }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font: 11px/1.5 var(--font); padding: 7px 11px; white-space: nowrap; transform: translate(-50%, calc(-100% - 8px)); z-index: 2 }
+footer { border-top: 1px solid var(--rule); padding-top: 20px; font-size: 11px; letter-spacing: .04em; color: var(--ink-3) }
+.empty { color: var(--ink-3); font-size: 13px; padding: 24px 0 }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <h1>SF Bay Area Leading Indicators</h1>
-    <div class="sub">Weekly signals of household economic pressure, from public data</div>
+    <p class="eyebrow">Public data · Refreshed daily</p>
+    <h1>SF Bay Area <span>Leading</span> Indicators</h1>
+    <div class="sub">Weekly signals of household economic pressure: prices, jobs, housing and demand</div>
   </header>
 
   <div id="banner" class="banner" hidden></div>

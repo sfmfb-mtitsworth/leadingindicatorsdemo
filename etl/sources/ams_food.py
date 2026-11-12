@@ -38,13 +38,13 @@ SERIES = [
      "scale": 0.01,  # cents per pound -> dollars per pound
      "sample": {"base": 1.08, "vol": 0.02, "season": 0.04, "trend": 0.02}},
     {"id": "beef_us", "order": 3, "title": "Beef Prices", "group": "Food staple prices",
-     "description": "Choice boxed beef cutout, per 100 lbs. Wholesale beef costs reach stores within weeks.",
+     "description": "Wholesale price of Choice boxed beef, per pound. Wholesale beef costs reach stores within weeks.",
      "unit": "usd", "decimals": 2, "freq": "weekly", "agg": "mean", "higher_is_worse": True, "weight": 0.75,
      "geo": "United States", "source": "USDA AMS, Daily Boxed Beef Cutout (2453)",
      "source_url": "https://mymarketnews.ams.usda.gov/viewReport/2453",
      "slug": 2453, "lmr": True, "filters": {}, "price_fields": ["choice_600_900_current", "choice_600_900", "choice_cutout"],
-     "scale": 1,
-     "sample": {"base": 365, "vol": 0.012, "trend": 0.05}},
+     "scale": 0.01,  # dollars per 100 lbs (cwt) -> dollars per pound, to match chicken
+     "sample": {"base": 3.65, "vol": 0.012, "trend": 0.05}},
 ]
 
 
