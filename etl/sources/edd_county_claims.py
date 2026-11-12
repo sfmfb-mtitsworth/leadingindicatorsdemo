@@ -17,7 +17,7 @@ KEY = None
 PAGES = ["https://edd.ca.gov/en/newsroom/facts-and-stats/dashboard/",
          "https://edd.ca.gov/Newsroom/facts-and-stats/dashboard.htm"]
 COUNTIES = {"san francisco", "marin"}
-UA = {"User-Agent": "Mozilla/5.0 (compatible; sfmfb-leadingindicators)"}
+UA = {"User-Agent": "Mozilla/5.0 (compatible; bayarea-leadingindicators)"}
 
 SERIES = [
     {"id": "claims_sfmarin", "order": 1, "title": "Unemployment Claims", "group": "Jobs & economy",

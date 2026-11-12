@@ -6,7 +6,7 @@ For each source module:
   - key missing      -> sample data (status "sample"), clearly labelled on the page
   - fetch succeeds   -> merged into data/series/<id>.json history (status "live")
   - fetch fails      -> last stored history is kept (status "stale") with the error
-Outputs data/dashboard.json and artifacts/dashboard.html.
+Outputs data/dashboard.json and site/index.html (published to GitHub Pages).
 
 Series metadata fields:
   id, title, description, group, unit ("usd", "count", "index", "pct"), decimals,
@@ -192,10 +192,10 @@ def main(only=None):
     series.sort(key=lambda s: (GROUPS.index(s["group"]), s.get("order", 99)))
     data = {"generated_at": now_iso(), "groups": GROUPS, "series": series, "composite": composite(series)}
     (ROOT / "data" / "dashboard.json").write_text(json.dumps(data, indent=1) + "\n")
-    template = (ROOT / "templates" / "dashboard.html").read_text()
+    template = (ROOT / "templates" / "dashboard.html").read_text(encoding="utf-8")
     payload = json.dumps(data, separators=(",", ":")).replace("</", "<\\/")
-    (ROOT / "artifacts").mkdir(exist_ok=True)
-    (ROOT / "artifacts" / "dashboard.html").write_text(template.replace(PLACEHOLDER, payload))
+    (ROOT / "site").mkdir(exist_ok=True)
+    (ROOT / "site" / "index.html").write_text(template.replace(PLACEHOLDER, payload), encoding="utf-8")
     counts = {k: sum(s["status"] == k for s in series) for k in ("live", "sample", "stale", "error")}
     print(f"Built dashboard: {counts}")
 

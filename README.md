@@ -1,8 +1,8 @@
-# Leading Indicators
+# SF Bay Area Leading Indicators
 
-Weekly leading indicators of food insecurity for the SF-Marin Food Bank. GitHub Actions
-pulls each source, scores anomalies and renders `artifacts/dashboard.html`. A Claude
-Routine publishes that file to the leadership dashboard artifact.
+Weekly leading indicators of household economic pressure in the San Francisco Bay Area:
+prices, jobs and housing. GitHub Actions pulls each source, scores anomalies, renders
+`site/index.html` and publishes it to GitHub Pages.
 
 ## Indicators
 
@@ -30,17 +30,17 @@ secret under Settings > Secrets and variables > Actions and the next run switche
 
 ## Schedule
 
-- **GitHub Actions** (`.github/workflows/etl.yml`) fetches every source and rebuilds `artifacts/dashboard.html` daily at about 3am Pacific.
-- **Claude Routine** "Leading Indicators Dashboard Publish" publishes that file to the dashboard artifact at 7:30am Pacific.
-  It must have this repository attached so it reads `.claude/settings.json`, whose allow rule lets the unattended
-  session run the Artifact publish.
+- **GitHub Actions** (`.github/workflows/etl.yml`) fetches every source, rebuilds `site/index.html` and deploys it
+  to GitHub Pages daily at about 3am Pacific. It also runs on pushes that change `etl/`, `templates/` or the workflow,
+  and can be run by hand from the Actions tab.
+- GitHub Pages must be set to deploy from **GitHub Actions** (Settings > Pages > Source).
 
 ## How it works
 
 - `etl/sources/<name>.py`: one module per source. Each declares `KEY`, `SERIES` metadata and `fetch()`.
 - `etl/build.py`: runs every source, merges results into `data/series/<id>.json` (history
   accumulates, which matters for WARN since EDD only publishes the current fiscal year),
-  scores anomalies and writes `data/dashboard.json` and `artifacts/dashboard.html`.
+  scores anomalies and writes `data/dashboard.json` and `site/index.html`.
 - A failed source keeps its last good data and is flagged on the dashboard; it never blocks the others.
 
 **Anomaly levels:** each period's z-score against the trailing 52 weeks (24 months for monthly

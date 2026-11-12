@@ -9,6 +9,7 @@ even months; SF food at home monthly), and county unemployment about five weeks 
 
 import datetime as dt
 import json
+import time
 import urllib.request
 
 from common import USER_AGENT, env
@@ -54,8 +55,15 @@ def fetch():
         body["registrationkey"] = env("BLS_API_KEY")
     req = urllib.request.Request(URL, data=json.dumps(body).encode(),
                                  headers={"Content-Type": "application/json", "User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        payload = json.load(r)
+    for attempt in range(4):  # BLS returns occasional 503s; retry before giving up
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                payload = json.load(r)
+            break
+        except Exception:
+            if attempt == 3:
+                raise
+            time.sleep(10 * (attempt + 1))
     if payload.get("status") != "REQUEST_SUCCEEDED":
         raise RuntimeError(f"BLS: {payload.get('message')}")
     vals = {}

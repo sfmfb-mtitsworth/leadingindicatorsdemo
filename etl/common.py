@@ -17,7 +17,7 @@ import time
 import urllib.parse
 import urllib.request
 
-USER_AGENT = "sfmfb-leadingindicators/1.0 (+https://www.sfmfoodbank.org)"
+USER_AGENT = "bayarea-leadingindicators/1.0"
 
 
 def http_get(url, params=None, headers=None, timeout=60, retries=2):

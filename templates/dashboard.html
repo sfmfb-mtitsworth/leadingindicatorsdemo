@@ -1,5 +1,10 @@
-<title>Leading Indicators | Food Insecurity</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Weekly leading indicators of household economic pressure in the San Francisco Bay Area: prices, jobs and housing.">
+<title>SF Bay Area Leading Indicators</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Source+Sans+3:wght@400;600&display=swap">
 <style>
@@ -23,7 +28,7 @@
   --rule: #2c362d; --grid: #222b23; --brand: #74c27a; --brand-soft: #1f3321;
   --bar: #4a524c; --line: #a9b6aa; --trend: #eef1f3; --sev1: #96534e; --sev2: #dd574e; --sev3: #ff7f66; --calm: #4a524c;
   --warn-bg: #2f2710; --warn-ink: #f0c869; color-scheme: dark }
-body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body) }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body) }
 .wrap { max-width: 1100px; margin: 0 auto; padding-block: 24px 48px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
   display: grid; gap: 20px }
@@ -74,8 +79,6 @@ h3 { font: 700 17px/1.25 var(--display); margin: 0; text-wrap: balance }
 .tile > * { flex-shrink: 0 }
 .tile h3 { white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
 .tile .desc { font-size: 13px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden }
-.ask-all { display: inline-block; margin-top: 4px; padding: 8px 14px; border-radius: 5px; background: var(--brand); color: var(--surface); font-weight: 600; text-decoration: none }
-.ask-all:hover { filter: brightness(1.1) } .ask-all:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px }
 .sd-note { grid-column: 1 / -1; border-top: 1px solid var(--rule); padding-top: 12px; font-size: 14px; color: var(--ink-2) }
 .sd-note p { margin: 4px 0 0; max-width: 90ch }
 .trend-sw { height: 2px !important; width: 16px !important; background: var(--trend) }
@@ -103,21 +106,21 @@ h3 { font: 700 17px/1.25 var(--display); margin: 0; text-wrap: balance }
 footer { text-align: center; font-size: 13px; color: var(--ink-3); font-style: italic }
 .empty { color: var(--ink-3); font-size: 14px; padding: 24px 0 }
 </style>
-
+</head>
+<body>
 <div class="wrap">
   <header class="top">
-    <h1>Leading Indicators | Food Insecurity</h1>
-    <div class="sub">For internal use only. Consult the business owner before sharing outside the food bank.</div>
+    <h1>SF Bay Area Leading Indicators</h1>
+    <div class="sub">Weekly signals of household economic pressure, from public data</div>
   </header>
 
   <div id="banner" class="banner" hidden></div>
 
   <section class="card intro">
-    <p>A weekly snapshot of signals that tend to move before demand for food assistance does: prices, jobs and housing pressure. Each bar is colored by how far it sits from that indicator's normal range over the prior year, and the line shows its recent average. We use county-level data for San Francisco and Marin where it exists; many sources only publish for San Francisco, the Bay Area or California, so each card names its geography.</p>
+    <p>A weekly snapshot of signals that tend to move before household financial strain shows up elsewhere: prices, jobs and housing pressure. Each bar is colored by how far it sits from that indicator's normal range over the prior year, and the line shows its recent average. It uses county-level data for San Francisco and Marin where it exists; many sources only publish for San Francisco, the Bay Area or California, so each card names its geography.</p>
     <div class="controls">
       <div class="label">Time range</div>
       <div class="range" id="range">January 2025 to present</div>
-      <a class="ask-all" id="ask-all" target="_blank" rel="noopener" title="Opens a new Claude chat that reads this dashboard's public data">Ask Claude about this data ↗</a>
       <div class="legend" aria-label="Anomaly severity">
         <span><i class="sw" style="background:var(--calm)"></i>Normal</span>
         <span><i class="sw" style="background:var(--sev1)"></i>Level 1 (1+ SD)</span>
@@ -147,7 +150,7 @@ footer { text-align: center; font-size: 13px; color: var(--ink-3); font-style: i
 
   <div id="groups"></div>
 
-  <footer>Dashboard owned by the Chief Operating Officer. Built by Analytics &amp; Evaluation.</footer>
+  <footer>Built from public data sources, named on each card. Refreshed daily.</footer>
 </div>
 
 <script>
@@ -263,12 +266,6 @@ function movingAvg(points, freq) {
 }
 const windowed = (points, freq, dom) => points.filter(p => periodEnd(p, freq) > dom.start && d8(p[0]) < dom.end);
 
-/* "Ask Claude" opens a new claude.ai chat with a prefilled prompt pointing at the public raw data. */
-const REPO = "https://github.com/sfmfb-mtitsworth/publicassets";
-const RAW = "https://raw.githubusercontent.com/sfmfb-mtitsworth/publicassets/main/";
-const chatUrl = prompt => "https://claude.ai/new?q=" + encodeURIComponent(prompt);
-const askAllUrl = () => chatUrl(`I'm looking at the SF-Marin Food Bank Leading Indicators dashboard. Its public repo is ${REPO} (the README explains each data source and how anomaly levels are scored). The full dataset, with every indicator's values, z-scores and anomaly levels, is at ${RAW}data/dashboard.json, and each indicator's raw history is at ${RAW}data/series/<id>.json. Please read the data, then answer my questions. My first question: `);
-
 const fullTitle = s => `${s.title} - ${s.cadence || (s.freq === "monthly" ? "Monthly" : "Weekly")}`;
 
 function statusChip(s) {
@@ -282,7 +279,6 @@ const levelChip = lvl => lvl ? `<span class="chip l${lvl}">Level ${lvl}</span>` 
 function render() {
   if (!DATA) { document.getElementById("groups").appendChild(h('<div class="card empty">No data yet. The weekly ETL fills this page after its first run.</div>')); return; }
   const series = DATA.series;
-  document.getElementById("ask-all").href = askAllUrl();
   const sample = series.filter(s => s.status === "sample");
   const broken = series.filter(s => s.status === "stale" || s.status === "error");
   const banner = document.getElementById("banner");
@@ -347,5 +343,6 @@ function render() {
   draw();
 }
 render();
-
 </script>
+</body>
+</html>
