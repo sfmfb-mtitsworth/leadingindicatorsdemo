@@ -8,7 +8,7 @@ prices, jobs and housing. GitHub Actions pulls each source, scores anomalies, re
 
 | Group | Indicator | Geography | Source | Secret |
 |---|---|---|---|---|
-| Demand signals | Searches for "food bank" | SF-Oakland-San Jose DMA | Google Trends API (alpha), same query as `hungersearchindex`; history backfilled from that repo | `GOOGLE_TRENDS_SA_KEY` |
+| Demand signals | Searches for "food bank" | SF-Oakland-San Jose DMA | Google Trends API (alpha), same query as `hungersearchindex`; Google's 0-100 score, full 3-year series replaced each run | `GOOGLE_TRENDS_SA_KEY` |
 | Fuel prices | Gas prices | San Francisco | EIA weekly retail | `EIA_API_KEY` |
 | Fuel prices | Diesel prices | California | EIA weekly retail | `EIA_API_KEY` |
 | Food staple prices | Egg prices | California | USDA AMS report 2844 | `USDA_AMS_API_KEY` |

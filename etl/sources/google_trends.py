@@ -1,11 +1,13 @@
 """Google searches for "food bank" in the San Francisco-Oakland-San Jose DMA (Google Trends API alpha).
 
 Same query as the California Hunger Signal project (hungersearchindex): term "food bank", BROAD
-match, DMA 807, weekly. Auth is a Google Cloud service account in the project that has Trends
+match, DMA 807, weekly. Values are Google's 0-100 score (scaledSearchInterest): 100 is the busiest week
+in the 3-year window requested. Google rescales that window on every pull, so the stored history is
+replaced each run (replace_history) instead of merged, keeping every value on one scale. Auth is a Google Cloud service account in the project that has Trends
 alpha access; its JSON key goes in the GOOGLE_TRENDS_SA_KEY secret (the whole file's contents).
 
 KEY is None on purpose: without the secret the fetch fails and the dashboard keeps the stored
-history (backfilled from hungersearchindex) flagged as not updating, instead of sample data.
+history flagged as not updating, instead of sample data.
 """
 
 import datetime as dt
@@ -21,11 +23,11 @@ DMA = "807"  # San Francisco-Oakland-San Jose
 
 SERIES = [
     {"id": "searches_bay", "order": 1, "title": "Searches for \"Food Bank\"", "group": "Demand signals",
-     "description": "How often people in the SF-Oakland-San Jose media market search Google for \"food bank\". A relative index, not a count of searches. More searches suggest more people looking for help.",
-     "unit": "index", "decimals": 0, "freq": "weekly", "agg": "mean", "higher_is_worse": True, "weight": 0,
+     "description": "How often people in the SF-Oakland-San Jose media market search Google for \"food bank\", on a 0-100 scale where 100 is the busiest week of the past three years. More searches suggest more people looking for help.",
+     "unit": "index", "decimals": 0, "replace_history": True, "freq": "weekly", "agg": "mean", "higher_is_worse": True, "weight": 0,
      "geo": "SF-Oakland-San Jose DMA", "source": "Google Trends API (alpha)",
      "source_url": "https://trends.google.com/trends/explore?geo=US-CA-807&q=food%20bank",
-     "sample": {"base": 15000, "vol": 0.15, "season": 0.15, "integer": True}},
+     "sample": {"base": 55, "vol": 0.15, "season": 0.15, "integer": True}},
 ]
 
 
@@ -66,5 +68,5 @@ def fetch():
             continue
         # Trends weeks start on Sunday; +1 day keys each to the Monday week the dashboard uses.
         d = dt.date.fromisoformat(p["timeRange"]["startTime"][:10]) + dt.timedelta(days=1)
-        pts.append((d, float(p["searchInterest"])))
+        pts.append((d, float(p["scaledSearchInterest"])))
     return {"searches_bay": pts}

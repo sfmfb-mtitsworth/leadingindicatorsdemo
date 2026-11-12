@@ -14,6 +14,7 @@ Series metadata fields:
   higher_is_worse (bool), weight (composite weight), geo, source, source_url,
   lag_weeks (optional: recent weeks to drop while the source is still filling them in),
   fill_zeros (optional, weekly sums: False when a missing week means "not published yet", not zero),
+  replace_history (optional: each fetch returns the full series on a new scale, so drop stored points on success),
   cadence (optional: shown after the title; defaults to "Weekly" or "Monthly" from freq),
   sample {base, vol, trend?, season?, spike?, integer?}
 """
@@ -99,7 +100,8 @@ def run_source(mod):
                 if meta.get("fill_zeros", True):  # counts of events: a week with none is a real zero
                     bucketed = common.fill_zero_weeks(bucketed, last)
                 prev_pts = {d: v for d, v in prev_pts.items() if d <= last.isoformat()}
-            merged = {**prev_pts, **{d.isoformat(): round(v, 4) for d, v in bucketed}}
+            kept = {} if meta.get("replace_history") else prev_pts
+            merged = {**kept, **{d.isoformat(): round(v, 4) for d, v in bucketed}}
             record = {"status": "live", "fetched_at": now_iso(), "error": None,
                       "points": sorted([d, v] for d, v in merged.items())}
             save_history(sid, record)
