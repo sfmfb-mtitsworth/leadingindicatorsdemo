@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-11T17:55:14+00:00",
+ "generated_at": "2026-11-12T18:21:13+00:00",
  "groups": [
   "Fuel prices",
   "Food staple prices",
@@ -25,7 +25,7 @@
    "eia_series": "EMM_EPMR_PTE_Y05SF_DPG",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:11+00:00",
+   "fetched_at": "2026-11-12T18:21:10+00:00",
    "key": "EIA_API_KEY",
    "points": [
     [
@@ -1334,7 +1334,7 @@
    "eia_series": "EMD_EPD2D_PTE_SCA_DPG",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:11+00:00",
+   "fetched_at": "2026-11-12T18:21:10+00:00",
    "key": "EIA_API_KEY",
    "points": [
     [
@@ -2653,7 +2653,7 @@
    "scale": 0.01,
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:07+00:00",
+   "fetched_at": "2026-11-12T18:21:05+00:00",
    "key": "USDA_AMS_API_KEY",
    "points": [
     [
@@ -3252,7 +3252,7 @@
    "scale": 0.01,
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:07+00:00",
+   "fetched_at": "2026-11-12T18:21:05+00:00",
    "key": "USDA_AMS_API_KEY",
    "points": [
     [
@@ -4245,7 +4245,7 @@
    "scale": 1,
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:07+00:00",
+   "fetched_at": "2026-11-12T18:21:05+00:00",
    "key": "USDA_AMS_API_KEY",
    "points": [
     [
@@ -5210,16 +5210,16 @@
     ],
     [
      "2026-11-09",
-     340.91,
-     -1.15,
+     339.9417,
+     -1.22,
      0
     ]
    ],
    "stats": {
-    "latest": 340.91,
+    "latest": 339.9417,
     "latest_date": "2026-11-09",
-    "recent_avg": 343.05665,
-    "year_avg": 358.1977980769231,
+    "recent_avg": 342.814575,
+    "year_avg": 358.17917692307697,
     "recent_n": 4,
     "year_n": 52
    }
@@ -5239,8 +5239,8 @@
    "geo": "SF-Oakland-Hayward",
    "source": "BLS CPI-U, food at home",
    "source_url": "https://www.bls.gov/regions/west/consumerpriceindex_sanfrancisco.htm",
-   "status": "live",
-   "error": null,
+   "status": "stale",
+   "error": "HTTPError: HTTP Error 503: Service Unavailable",
    "fetched_at": "2026-11-11T17:55:08+00:00",
    "key": null,
    "points": [
@@ -5536,7 +5536,7 @@
    "source_url": "https://edd.ca.gov/en/newsroom/facts-and-stats/dashboard/",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:10+00:00",
+   "fetched_at": "2026-11-12T18:21:06+00:00",
    "key": null,
    "points": [
     [
@@ -7702,7 +7702,7 @@
    "source_url": "https://edd.ca.gov/en/jobs_and_training/Layoff_Services_WARN",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:10+00:00",
+   "fetched_at": "2026-11-12T18:21:07+00:00",
    "key": null,
    "points": [
     [
@@ -8471,7 +8471,7 @@
    "fred_id": "WEI",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:12+00:00",
+   "fetched_at": "2026-11-12T18:21:11+00:00",
    "key": null,
    "points": [
     [
@@ -9736,16 +9736,22 @@
     ],
     [
      "2026-10-26",
-     3.47,
-     2.18,
+     3.48,
+     2.21,
+     0
+    ],
+    [
+     "2026-11-02",
+     3.29,
+     1.56,
      0
     ]
    ],
    "stats": {
-    "latest": 3.47,
-    "latest_date": "2026-10-26",
-    "recent_avg": 3.1775,
-    "year_avg": 2.7209615384615384,
+    "latest": 3.29,
+    "latest_date": "2026-11-02",
+    "recent_avg": 3.245,
+    "year_avg": 2.7465384615384614,
     "recent_n": 4,
     "year_n": 52
    }
@@ -9765,8 +9771,8 @@
    "geo": "San Francisco + Marin",
    "source": "BLS LAUS",
    "source_url": "https://www.bls.gov/lau/",
-   "status": "live",
-   "error": null,
+   "status": "stale",
+   "error": "HTTPError: HTTP Error 503: Service Unavailable",
    "fetched_at": "2026-11-11T17:55:08+00:00",
    "key": null,
    "points": [
@@ -10132,8 +10138,8 @@
    "geo": "SF-Oakland-Hayward",
    "source": "BLS CPI-U",
    "source_url": "https://www.bls.gov/regions/west/consumerpriceindex_sanfrancisco.htm",
-   "status": "live",
-   "error": null,
+   "status": "stale",
+   "error": "HTTPError: HTTP Error 503: Service Unavailable",
    "fetched_at": "2026-11-11T17:55:08+00:00",
    "key": null,
    "points": [
@@ -10291,7 +10297,7 @@
    "source_url": "https://data.sfgov.org/Housing-and-Buildings/Eviction-Notices/5cei-gny5",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:14+00:00",
+   "fetched_at": "2026-11-12T18:21:12+00:00",
    "key": null,
    "points": [
     [
@@ -11269,7 +11275,7 @@
    "source_url": "https://www.zillow.com/research/data/",
    "status": "live",
    "error": null,
-   "fetched_at": "2026-11-11T17:55:14+00:00",
+   "fetched_at": "2026-11-12T18:21:13+00:00",
    "key": null,
    "points": [
     [
@@ -12902,12 +12908,12 @@
   ],
   [
    "2026-10-26",
-   0.31,
+   0.3,
    0
   ],
   [
    "2026-11-02",
-   0.39,
+   0.16,
    0
   ]
  ]
